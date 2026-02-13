@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comps — Rental Intelligence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafbfc;
+      --surface: #ffffff;
+      --surface-2: #f3f4f8;
+      --surface-3: #e8eaf0;
+      --border: #e0e3eb;
+      --text: #111827;
+      --text-2: #374151;
+      --text-muted: #6b7280;
+      --text-light: #9ca3af;
+      --brand: #2563eb;
+      --brand-light: #dbeafe;
+      --brand-dark: #1d4ed8;
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --amber: #d97706;
+      --amber-bg: #fffbeb;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-lg: 0 4px 12px rgba(0,0,0,0.08);
+      --radius: 12px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #09090b;
+      --surface: #18181b;
+      --surface-2: #1f1f23;
+      --surface-3: #27272a;
+      --border: #2e2e33;
+      --text: #f4f4f5;
+      --text-2: #d4d4d8;
+      --text-muted: #71717a;
+      --text-light: #52525b;
+      --brand: #3b82f6;
+      --brand-light: rgba(59,130,246,0.15);
+      --brand-dark: #60a5fa;
+      --green: #34d399;
+      --green-bg: rgba(52,211,153,0.1);
+      --amber: #fbbf24;
+      --amber-bg: rgba(251,191,36,0.1);
+      --red: #f87171;
+      --red-bg: rgba(248,113,113,0.1);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-lg: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--surface) 85%, transparent);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--brand);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .nav-actions { display: flex; gap: 0.5rem; align-items: center; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn:hover { background: var(--surface-2); }
+
+    .btn-brand {
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+      font-weight: 600;
+    }
+
+    .btn-brand:hover { background: var(--brand-dark); }
+
+    .btn-lg { padding: 0.6rem 1.5rem; font-size: 0.875rem; }
+
+    /* ─── LAYOUT ─── */
+    .page { max-width: 1280px; margin: 0 auto; padding: 1.5rem 2rem; }
+
+    /* ─── SEARCH BAR ─── */
+    .search-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 0.6rem 1rem;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      outline: none;
+    }
+
+    .search-input::placeholder { color: var(--text-light); }
+
+    .filter-row {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem 0.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-pill:hover { border-color: var(--brand); color: var(--brand); }
+    .filter-pill.active { background: var(--brand-light); border-color: var(--brand); color: var(--brand); }
+
+    .filter-pill input {
+      width: 45px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      border: none;
+      background: transparent;
+      color: inherit;
+      text-align: center;
+      outline: none;
+      padding: 0;
+    }
+
+    .filter-pill input::placeholder { color: var(--text-light); }
+
+    .filter-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      margin: 0 0.25rem;
+    }
+
+    /* ─── MY PROPERTY BAR ─── */
+    .my-property {
+      background: var(--brand-light);
+      border: 1px solid color-mix(in srgb, var(--brand) 25%, transparent);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .my-property-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--brand);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .my-property-specs {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-2);
+    }
+
+    .my-property-specs strong { font-weight: 600; }
+
+    .my-property-edit {
+      font-size: 0.75rem;
+      color: var(--brand);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* ─── EDIT MODAL ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal h3 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .modal-field label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+    }
+
+    .modal-field input {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+    }
+
+    .modal-field input:focus { border-color: var(--brand); }
+
+    .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; }
+
+    /* ─── STATS ─── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-top: 0.125rem;
+    }
+
+    .stat-sub { font-size: 0.75rem; color: var(--text-muted); }
+    .stat-green .stat-value { color: var(--green); }
+
+    /* ─── RESULTS HEADER ─── */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .results-header h2 { font-size: 1rem; font-weight: 600; }
+    .results-count { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ─── LISTING CARDS ─── */
+    .listings { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: color-mix(in srgb, var(--brand) 30%, var(--border));
+    }
+
+    .card-img {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface-2);
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
+    }
+
+    .card:hover .card-img img { transform: scale(1.03); }
+
+    .card-img-empty {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--text-light);
+    }
+
+    /* Comp score ring overlay */
+    .comp-ring {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .comp-ring-value {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .comp-ring-label {
+      font-size: 0.45rem;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .comp-ring svg {
+      position: absolute;
+      inset: 0;
+      width: 44px;
+      height: 44px;
+      transform: rotate(-90deg);
+    }
+
+    .comp-ring circle {
+      fill: none;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .comp-ring .ring-bg { stroke: rgba(255,255,255,0.15); }
+
+    /* Days on market badge */
+    .dom-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      color: #fff;
+    }
+
+    /* Card body */
+    .card-body {
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-top {}
+
+    .card-price {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .card-price span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .card-address {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      margin-top: 0.125rem;
+    }
+
+    .card-address a { color: inherit; text-decoration: none; }
+    .card-address a:hover { color: var(--brand); }
+
+    .card-specs {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .card-specs strong { color: var(--text); font-weight: 600; }
+
+    .card-spec-sep { color: var(--border); }
+
+    .card-ppsf {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Tags */
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.75rem;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      padding: 0.175rem 0.5rem;
+      border-radius: 6px;
+      background: var(--surface-2);
+      color: var(--text-muted);
+    }
+
+    .tag-value {
+      background: var(--green-bg);
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .tag-premium {
+      background: var(--amber-bg);
+      color: var(--amber);
+    }
+
+    /* ─── EMPTY / LOADING ─── */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state h3 {
+      font-size: 1.125rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .loading { text-align: center; padding: 4rem; color: var(--text-muted); }
+
+    .spinner {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--border);
+      border-top-color: var(--brand);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-bottom: 0.75rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── FOOTER ─── */
+    footer {
+      margin-top: 3rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-light);
+      text-align: center;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 1rem; }
+      .page { padding: 1rem; }
+      .card { grid-template-columns: 1fr; }
+      .card-img img, .card-img-empty { min-height: 200px; }
+      .search-row { flex-wrap: wrap; }
+      .filter-row { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.5rem; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .my-property { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="logo" href="#">
+        <div class="logo-mark">C</div>
+        Comps
+      </a>
+      <div class="nav-actions">
+        <button class="btn" id="theme-toggle" onclick="toggleTheme()">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- SEARCH -->
+    <div class="search-bar">
+      <div class="search-row">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;color:var(--text-light)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="text" id="location" placeholder="Search by ZIP, neighborhood, or city..." value="Moon Valley">
+        <button class="btn btn-brand btn-lg" id="searchBtn" onclick="doSearch()">Search</button>
+      </div>
+      <div class="filter-row">
+        <div class="filter-pill">Beds <input type="number" id="minBeds" placeholder="Min" value="3"> – <input type="number" id="maxBeds" placeholder="Max" value="6"></div>
+        <div class="filter-pill">Baths <input type="number" id="minBaths" placeholder="Min" value="2"> – <input type="number" id="maxBaths" placeholder="Max"></div>
+        <div class="filter-sep"></div>
+        <div class="filter-pill">Sqft <input type="number" id="minSqft" placeholder="Min" value="1500"> – <input type="number" id="maxSqft" placeholder="Max" value="3200"></div>
+        <div class="filter-sep"></div>
+        <div class="filter-pill">Rent $ <input type="number" id="minPrice" placeholder="Min"> – <input type="number" id="maxPrice" placeholder="Max"></div>
+      </div>
+    </div>
+
+    <!-- MY PROPERTY BAR -->
+    <div class="my-property" id="myPropertyBar">
+      <div>
+        <div class="my-property-label">Your Property</div>
+        <div class="my-property-specs" id="myPropertySpecs">
+          <span><strong id="dispBeds">5</strong> bed</span>
+          <span><strong id="dispBaths">3</strong> bath</span>
+          <span><strong id="dispSqft">2,400</strong> sqft</span>
+          <span>ZIP <strong id="dispZip">85022</strong></span>
+        </div>
+      </div>
+      <span class="my-property-edit" onclick="openEdit()">Edit ✎</span>
+    </div>
+
+    <!-- Hidden inputs for my property -->
+    <input type="hidden" id="myBeds" value="5">
+    <input type="hidden" id="myBaths" value="3">
+    <input type="hidden" id="mySqft" value="2400">
+    <input type="hidden" id="myZip" value="85022">
+
+    <!-- RESULTS -->
+    <div id="results" class="hidden">
+      <div class="stats" id="stats"></div>
+      <div class="results-header">
+        <h2>Competing Listings</h2>
+        <span class="results-count" id="count"></span>
+      </div>
+      <div class="listings" id="listings"></div>
+    </div>
+
+    <div id="empty" class="empty-state">
+      <h3>Find your competition</h3>
+      <p>Enter a location and hit Search to pull live rental comps.</p>
+    </div>
+
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <p>Pulling listings...</p>
+    </div>
+
+    <footer>Comps — Rental Intelligence · Data via Zillow</footer>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div class="modal-overlay hidden" id="editModal" onclick="if(event.target===this)closeEdit()">
+    <div class="modal">
+      <h3>Your Property Details</h3>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem">We'll score every listing against yours so you can see who's really competing.</p>
+      <div class="modal-grid">
+        <div class="modal-field"><label>Bedrooms</label><input type="number" id="editBeds" value="5"></div>
+        <div class="modal-field"><label>Bathrooms</label><input type="number" id="editBaths" value="3"></div>
+        <div class="modal-field"><label>Square Feet</label><input type="number" id="editSqft" value="2400"></div>
+        <div class="modal-field"><label>ZIP Code</label><input type="text" id="editZip" value="85022"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="closeEdit()">Cancel</button>
+        <button class="btn btn-brand" onclick="saveEdit()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function val(id) { const v = document.getElementById(id).value.trim(); return v === '' ? undefined : v; }
+    function num(id) { const v = val(id); return v ? Number(v) : undefined; }
+    function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+
+    // Edit modal
+    function openEdit() {
+      document.getElementById('editBeds').value = val('myBeds') || '';
+      document.getElementById('editBaths').value = val('myBaths') || '';
+      document.getElementById('editSqft').value = val('mySqft') || '';
+      document.getElementById('editZip').value = val('myZip') || '';
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+    function closeEdit() { document.getElementById('editModal').classList.add('hidden'); }
+    function saveEdit() {
+      document.getElementById('myBeds').value = document.getElementById('editBeds').value;
+      document.getElementById('myBaths').value = document.getElementById('editBaths').value;
+      document.getElementById('mySqft').value = document.getElementById('editSqft').value;
+      document.getElementById('myZip').value = document.getElementById('editZip').value;
+      document.getElementById('dispBeds').textContent = val('myBeds') || '—';
+      document.getElementById('dispBaths').textContent = val('myBaths') || '—';
+      document.getElementById('dispSqft').textContent = num('mySqft')?.toLocaleString() || '—';
+      document.getElementById('dispZip').textContent = val('myZip') || '—';
+      closeEdit();
+    }
+
+    async function doSearch() {
+      const location = val('location');
+      if (!location) return;
+
+      const body = {
+        location,
+        minBeds: num('minBeds'), maxBeds: num('maxBeds'),
+        minBaths: num('minBaths'), maxBaths: num('maxBaths'),
+        minSqft: num('minSqft'), maxSqft: num('maxSqft'),
+        minPrice: num('minPrice'), maxPrice: num('maxPrice'),
+        myBeds: num('myBeds'), myBaths: num('myBaths'),
+        mySqft: num('mySqft'), myZip: val('myZip'),
+      };
+
+      document.getElementById('empty').classList.add('hidden');
+      document.getElementById('results').classList.add('hidden');
+      document.getElementById('loading').classList.remove('hidden');
+      document.getElementById('searchBtn').disabled = true;
+
+      try {
+        const res = await fetch('/api/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        renderResults(data.listings, body);
+      } catch (err) {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('empty').classList.remove('hidden');
+        document.getElementById('empty').innerHTML = `<h3>Something went wrong</h3><p>${err.message}</p>`;
+      } finally {
+        document.getElementById('searchBtn').disabled = false;
+      }
+    }
+
+    function compRingSvg(score) {
+      const r = 18;
+      const c = 2 * Math.PI * r;
+      const pct = score / 100;
+      const color = score >= 80 ? '#34d399' : score >= 60 ? '#fbbf24' : '#f87171';
+      return `<svg viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="${r}"/><circle cx="22" cy="22" r="${r}" stroke="${color}" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - pct)}"/></svg>`;
+    }
+
+    function renderResults(listings, params) {
+      document.getElementById('loading').classList.add('hidden');
+
+      if (!listings.length) {
+        document.getElementById('empty').classList.remove('hidden');
+        document.getElementById('empty').innerHTML = '<h3>No listings found</h3><p>Try a broader search.</p>';
+        return;
+      }
+
+      document.getElementById('results').classList.remove('hidden');
+
+      const prices = listings.map(l => l.price).filter(Boolean);
+      const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
+      const sorted = [...prices].sort((a, b) => a - b);
+      const median = sorted[Math.floor(sorted.length / 2)];
+      const withSqft = listings.filter(l => l.sqft && l.price);
+      const avgPpsf = withSqft.length ? withSqft.reduce((a, l) => a + l.price / l.sqft, 0) / withSqft.length : 0;
+
+      let statsHtml = `
+        <div class="stat"><div class="stat-label">Average</div><div class="stat-value">${fmt(avg)}</div><div class="stat-sub">per month</div></div>
+        <div class="stat"><div class="stat-label">Median</div><div class="stat-value">${fmt(median)}</div><div class="stat-sub">per month</div></div>
+        <div class="stat"><div class="stat-label">Range</div><div class="stat-value">${fmt(sorted[0])} – ${fmt(sorted[sorted.length-1])}</div><div class="stat-sub">low to high</div></div>
+      `;
+      if (avgPpsf) statsHtml += `<div class="stat"><div class="stat-label">Avg $/sqft</div><div class="stat-value">$${avgPpsf.toFixed(2)}</div><div class="stat-sub">monthly</div></div>`;
+      if (params.mySqft && avgPpsf) {
+        const lo = Math.round(params.mySqft * avgPpsf * 0.95);
+        const hi = Math.round(params.mySqft * avgPpsf * 1.05);
+        statsHtml += `<div class="stat stat-green"><div class="stat-label">Your Suggested Rent</div><div class="stat-value">${fmt(lo)} – ${fmt(hi)}</div><div class="stat-sub">based on ${params.mySqft.toLocaleString()} sqft</div></div>`;
+      }
+
+      document.getElementById('stats').innerHTML = statsHtml;
+      document.getElementById('count').textContent = `${listings.length} properties`;
+
+      const valueTags = ['Pool','Garage','Updated','Granite','Hardwood Floors','Stainless Appliances','Views','Gated','Solar','New Roof','Fresh Paint','New Flooring','Fireplace','RV Parking','Corner Lot','Cul-de-sac','No HOA','3D Tour','New Build'];
+      const premiumTags = ['Pool','Views','Gated','Solar','Corner Lot','RV Parking','No HOA'];
+
+      document.getElementById('listings').innerHTML = listings.map(l => {
+        const hasScore = l.compScore !== undefined;
+        const ppsf = l.sqft && l.price ? `$${(l.price / l.sqft).toFixed(2)}/sqft` : '';
+        const highlights = l.highlights || [];
+
+        const imgHtml = l.image
+          ? `<img src="${l.image}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-img-empty>🏠</div>'">`
+          : `<div class="card-img-empty">🏠</div>`;
+
+        const ringHtml = hasScore ? `<div class="comp-ring">${compRingSvg(l.compScore)}<div class="comp-ring-value">${l.compScore}</div><div class="comp-ring-label">match</div></div>` : '';
+
+        const domHtml = l.daysListed ? `<div class="dom-badge">${l.daysListed}</div>` : '';
+
+        const tagsHtml = highlights.length ? `<div class="card-tags">${highlights.map(h => {
+          const cls = premiumTags.some(p => h.includes(p)) ? 'tag tag-premium' : valueTags.some(v => h.includes(v)) ? 'tag tag-value' : 'tag';
+          return `<span class="${cls}">${h}</span>`;
+        }).join('')}</div>` : '';
+
+        return `
+          <div class="card">
+            <div class="card-img">
+              ${imgHtml}
+              ${ringHtml}
+              ${domHtml}
+            </div>
+            <div class="card-body">
+              <div class="card-top">
+                <div class="card-price">${l.price ? fmt(l.price) : 'N/A'}<span>/mo</span></div>
+                <div class="card-address"><a href="${l.url}" target="_blank" rel="noopener">${l.address}</a></div>
+                <div class="card-specs">
+                  <span><strong>${l.beds || '?'}</strong> bd</span>
+                  <span class="card-spec-sep">|</span>
+                  <span><strong>${l.baths || '?'}</strong> ba</span>
+                  <span class="card-spec-sep">|</span>
+                  <span><strong>${l.sqft ? l.sqft.toLocaleString() : '—'}</strong> sqft</span>
+                </div>
+                ${ppsf ? `<div class="card-ppsf">${ppsf}</div>` : ''}
+              </div>
+              ${tagsHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Local data loader
+    async function loadLocal() {
+      try {
+        const res = await fetch('listings.json');
+        if (!res.ok) return;
+        const data = await res.json();
+        const myBeds = num('myBeds'), myBaths = num('myBaths'), mySqft = num('mySqft'), myZip = val('myZip');
+        for (const l of data) {
+          let s = 100;
+          if (myBeds) s -= Math.abs(l.beds - myBeds) * 15;
+          if (myBaths) s -= Math.abs(l.baths - myBaths) * 10;
+          if (mySqft && l.sqft) s -= Math.floor(Math.abs(l.sqft - mySqft) / 100) * 5;
+          if (myZip && l.zip === myZip) s += 10;
+          l.compScore = Math.max(0, Math.min(100, s));
+        }
+        data.sort((a, b) => b.compScore - a.compScore);
+        renderResults(data, { mySqft });
+      } catch (e) {}
+    }
+
+    function toggleTheme() {
+      const h = document.documentElement;
+      const b = document.getElementById('theme-toggle');
+      if (h.dataset.theme === 'dark') { h.removeAttribute('data-theme'); b.textContent = '🌙'; localStorage.setItem('theme','light'); }
+      else { h.dataset.theme = 'dark'; b.textContent = '☀️'; localStorage.setItem('theme','dark'); }
+    }
+
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.dataset.theme = 'dark';
+      document.getElementById('theme-toggle').textContent = '☀️';
+    }
+
+    document.querySelectorAll('.search-bar input').forEach(el => {
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+    });
+
+    loadLocal();
+  </script>
+</body>
+</html>

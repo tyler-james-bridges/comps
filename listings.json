@@ -1,0 +1,134 @@
+[
+  {
+    "address": "15620 N 14th Dr, Phoenix, AZ 85023",
+    "price": 2799,
+    "beds": 4,
+    "baths": 2.5,
+    "sqft": 2327,
+    "zip": "85023",
+    "url": "https://www.zillow.com/homedetails/15620-N-14th-Dr-Phoenix-AZ-85023/7960828_zpid/",
+    "daysListed": "New",
+    "source": "zillow"
+  },
+  {
+    "address": "1118 W Audrey Ln, Phoenix, AZ 85023",
+    "price": 3095,
+    "beds": 4,
+    "baths": 3,
+    "sqft": 2407,
+    "zip": "85023",
+    "url": "https://www.zillow.com/homedetails/1118-W-Audrey-Ln-Phoenix-AZ-85023/459404400_zpid/",
+    "daysListed": "New",
+    "source": "zillow"
+  },
+  {
+    "address": "15626 N 13th Ave, Phoenix, AZ 85023",
+    "price": 3000,
+    "beds": 4,
+    "baths": 3,
+    "sqft": 2985,
+    "zip": "85023",
+    "url": "https://www.zillow.com/homedetails/15626-N-13th-Ave-Phoenix-AZ-85023/7960835_zpid/",
+    "daysListed": "36 days ago",
+    "source": "zillow"
+  },
+  {
+    "address": "1958 W Meadow Dr, Phoenix, AZ 85023",
+    "price": 2295,
+    "beds": 4,
+    "baths": 3,
+    "sqft": 1890,
+    "zip": "85023",
+    "url": "https://www.zillow.com/homedetails/1958-W-Meadow-Dr-Phoenix-AZ-85023/7958156_zpid/",
+    "daysListed": "14 days ago",
+    "source": "zillow"
+  },
+  {
+    "address": "823 E Forest Hills Dr, Phoenix, AZ 85022",
+    "price": 3100,
+    "beds": 4,
+    "baths": 2,
+    "sqft": 2176,
+    "zip": "85022",
+    "url": "https://www.zillow.com/homedetails/823-E-Forest-Hills-Dr-Phoenix-AZ-85022/8008647_zpid/",
+    "daysListed": "15 days ago",
+    "source": "zillow"
+  },
+  {
+    "address": "1641 W Evans Dr, Phoenix, AZ 85023",
+    "price": 4000,
+    "beds": 4,
+    "baths": 2,
+    "sqft": 2002,
+    "zip": "85023",
+    "url": "https://www.zillow.com/homedetails/1641-W-Evans-Dr-Phoenix-AZ-85023/7962457_zpid/",
+    "daysListed": "New",
+    "source": "zillow"
+  },
+  {
+    "address": "14425 N Coral Gables Dr, Phoenix, AZ 85023",
+    "price": 4000,
+    "beds": 4,
+    "baths": 3,
+    "sqft": 2343,
+    "zip": "85023",
+    "url": "https://www.zillow.com/homedetails/14425-N-Coral-Gables-Dr-Phoenix-AZ-85023/7964675_zpid/",
+    "daysListed": "New",
+    "source": "zillow"
+  },
+  {
+    "address": "2057 W Village Dr, Phoenix, AZ 85023",
+    "price": 2500,
+    "beds": 4,
+    "baths": 2,
+    "sqft": 1800,
+    "zip": "85023",
+    "url": "https://www.zillow.com/homedetails/2057-W-Village-Dr-Phoenix-AZ-85023/7958420_zpid/",
+    "daysListed": "3 days ago",
+    "source": "zillow"
+  },
+  {
+    "address": "1420 E Michelle Dr, Phoenix, AZ 85022",
+    "price": 3500,
+    "beds": 4,
+    "baths": 3,
+    "sqft": 2592,
+    "zip": "85022",
+    "url": "https://www.zillow.com/homedetails/1420-E-Michelle-Dr-Phoenix-AZ-85022/8002097_zpid/",
+    "daysListed": "3 days ago",
+    "source": "zillow"
+  },
+  {
+    "address": "18835 N 16th Pl, Phoenix, AZ 85024",
+    "price": 3200,
+    "beds": 4,
+    "baths": 2.5,
+    "sqft": 2259,
+    "zip": "85024",
+    "url": "https://www.zillow.com/homedetails/18835-N-16th-Pl-Phoenix-AZ-85024/60556506_zpid/",
+    "daysListed": "27 days ago",
+    "source": "zillow"
+  },
+  {
+    "address": "14417 N 10th St, Phoenix, AZ 85022",
+    "price": 6250,
+    "beds": 4,
+    "baths": 2,
+    "sqft": 2393,
+    "zip": "85022",
+    "url": "https://www.zillow.com/homedetails/14417-N-10th-St-Phoenix-AZ-85022/8009026_zpid/",
+    "daysListed": "191 days ago",
+    "source": "zillow"
+  },
+  {
+    "address": "19841 N 14th St, Phoenix, AZ 85024",
+    "price": 4750,
+    "beds": 6,
+    "baths": 3,
+    "sqft": 2646,
+    "zip": "85024",
+    "url": "https://www.zillow.com/homedetails/19841-N-14th-St-Phoenix-AZ-85024/35971139_zpid/",
+    "daysListed": "6 days ago",
+    "source": "zillow"
+  }
+]
