@@ -7,7 +7,7 @@
     "start": "node server.mjs",
     "scrape": "node scraper.mjs",
     "test": "node --test tests/*.mjs",
-    "check": "node --check api/search.mjs && node --check lib/rent-check.mjs && node --check lib/x402.mjs && node --check tests/*.mjs",
+    "check": "node --check api/search.mjs && node --check api/openapi.mjs && node --check lib/rent-check.mjs && node --check lib/x402.mjs && node --check tests/*.mjs",
     "build": "npm run check"
   },
   "keywords": [
