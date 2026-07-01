@@ -1,4 +1,12 @@
 // Vercel serverless function for rental search
+import { readFile } from 'node:fs/promises';
+import { withPayment } from '../lib/x402.mjs';
+import {
+  formatRentCheckCard,
+  gracefulRentCheckCard,
+  normalizeRentCheckInput,
+  searchFilters,
+} from '../lib/rent-check.mjs';
 
 export const config = {
   maxDuration: 30,
@@ -193,37 +201,45 @@ async function searchZillow({ location, minBeds, maxBeds, minBaths, maxBaths, mi
   return { listings, url, slug };
 }
 
+async function loadCachedListings() {
+  try {
+    const file = await readFile(new URL('../public/listings.json', import.meta.url), 'utf8');
+    return JSON.parse(file);
+  } catch {
+    return [];
+  }
+}
+
+export function canUseCachedListings(location = '') {
+  return /\b(phoenix|moon valley|85014|85015|85016|85018|85020|85022|85023|85024|85028|85029|85032|85050|85051|85053)\b/i.test(
+    String(location)
+  );
+}
+
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Payment, X-X402-Payment');
+  res.setHeader('Access-Control-Expose-Headers', 'X-Payment-Response, X-Payment-Required');
+
+  if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  try {
-    const { location, minBeds, maxBeds, minBaths, maxBaths, minSqft, maxSqft, minPrice, maxPrice, myBeds, myBaths, mySqft, myZip } = req.body;
-
-    if (!location) {
-      return res.status(400).json({ error: 'Location is required' });
+  return withPayment(req, res, async () => {
+    try {
+      const subject = normalizeRentCheckInput(req.body || {});
+      if (!subject.ok) return { body: gracefulRentCheckCard(subject.message, { location: subject.location }) };
+      const result = await searchZillow(searchFilters(subject));
+      const listings = result.listings.length
+        ? result.listings
+        : canUseCachedListings(subject.location)
+          ? await loadCachedListings()
+          : [];
+      return { body: formatRentCheckCard(subject, listings) };
+    } catch {
+      return { body: gracefulRentCheckCard('Rent Check could not complete. Try again shortly.') };
     }
-
-    const result = await searchZillow({
-      location, minBeds, maxBeds, minBaths, maxBaths, minSqft, maxSqft, minPrice, maxPrice,
-    });
-
-    if (myBeds || myBaths || mySqft) {
-      for (const l of result.listings) {
-        let score = 100;
-        if (myBeds) score -= Math.abs(l.beds - myBeds) * 15;
-        if (myBaths) score -= Math.abs(l.baths - myBaths) * 10;
-        if (mySqft && l.sqft) score -= Math.floor(Math.abs(l.sqft - mySqft) / 100) * 5;
-        else if (mySqft) score -= 10;
-        if (myZip && l.zip === myZip) score += 10;
-        l.compScore = Math.max(0, Math.min(100, score));
-      }
-      result.listings.sort((a, b) => b.compScore - a.compScore);
-    }
-
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  });
 }

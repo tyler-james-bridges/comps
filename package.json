@@ -5,12 +5,23 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "scrape": "node scraper.mjs"
+    "scrape": "node scraper.mjs",
+    "test": "node --test tests/*.mjs",
+    "check": "node --check api/search.mjs && node --check lib/rent-check.mjs && node --check lib/x402.mjs && node --check tests/*.mjs",
+    "build": "npm run check"
   },
-  "keywords": ["rental", "comps", "real-estate", "zillow", "scraper"],
+  "keywords": [
+    "rental",
+    "comps",
+    "real-estate",
+    "zillow",
+    "scraper"
+  ],
   "author": "Tyler James-Bridges",
   "license": "MIT",
   "dependencies": {
+    "@x402/core": "^2.17.0",
+    "@x402/evm": "^2.17.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "node-fetch": "^3.3.2"
