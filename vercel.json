@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/openapi.json", "destination": "/api/openapi" },
     { "source": "/api/search", "destination": "/api/search" }
   ],
   "outputDirectory": "public",
